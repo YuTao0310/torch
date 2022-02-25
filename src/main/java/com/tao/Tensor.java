@@ -175,22 +175,6 @@ public class Tensor
      * @return 如果是ture,代表能够进行掩码操作；如果是false，代表无法进行掩码操作
      */
     public static boolean maskedScatter(NDArray x, NDArray mask, NDArray updates, NDArray y) {
-        /* 如果四者均为空，其掩码为null */
-        if (x == null && mask == null && updates ==null && y == null) {
-            return true;
-        }
-        
-        /* 输入值中有null，无法进行掩码操作 */
-        if (x == null || mask == null || updates ==null || y == null) {
-            return false;
-        }
-
-        /* 如果源张量和更新后的张量的维度不一致，依然无法进行掩码操作 */
-        if (!(x.getShape().equals(y.getShape()))) {
-            System.out.println("源张量、更新后的张量维度不相同");
-            return false;        
-        }
-
         /* 如果掩码张量不符合广播的要求，则无法进行掩码操作 */
         mask = broadcast(mask, x.getShape());
         if (mask == null) {
